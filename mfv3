@@ -1,0 +1,16 @@
+CC = gcc
+CFLAGS = -W
+OBJS = main.o 2.o 3.o
+
+mf1.bin: $(OBJS)
+	$(CC) -o mf1.bin $(OBJS)
+main.o: main.c a.h
+	$(CC) $(CFLAGS) -c main.c
+2.o: 2.c a.h b.h
+	$(CC) $(CFLAGS) -c 2.c
+3.o: 3.c b.h c.h
+	$(CC) $(CFLAGS) -c 3.c
+remove:
+	rm -f mf1.bin $(OBJS)
+.c.o:
+	gcc -lm -c $<

@@ -1,0 +1,31 @@
+DYBIN = /tmp/dywang/bin
+CC = gcc
+CFLAGS = -W
+OBJS = main.o 2.o 3.o
+
+mfv4.bin: $(OBJS)
+	$(CC) -o $@ $(OBJS)
+main.o: main.c a.h
+	$(CC) $(CFLAGS) -c main.c
+2.o: 2.c a.h b.h
+	$(CC) $(CFLAGS) -c 2.c
+3.o: 3.c b.h c.h
+	$(CC) $(CFLAGS) -c 3.c
+remove:
+	-rm -f mf1.bin $(OBJS)
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+install: mfv4.bin
+	@if [ -d $(DYBIN) ]; \
+	then \
+		cp mfv4.bin $(DYBIN) &&\
+		chmod a-w $(DYBIN)/mfv4.bin &&\
+                chmod a+x $(DYBIN)/mfv4.bin &&\
+		echo "Installed in $(DYBIN)";\
+	else \
+		mkdir -p $(DYBIN);\
+		cp mfv4.bin $(DYBIN) &&\
+                chmod a-w $(DYBIN)/mfv4.bin &&\
+                chmod a+x $(DYBIN)/mfv4.bin &&\
+                echo "Installed in $(DYBIN)";\
+	fi
